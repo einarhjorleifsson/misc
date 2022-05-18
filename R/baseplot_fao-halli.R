@@ -15,7 +15,7 @@ baseplot <- function(data, shape, value = n, wrap = zone) {
 
   data <-
     data %>%
-    rename(v = {{ value }},
+    dplyr::rename(v = {{ value }},
            # CHECK: why does this pass error check if no wrap passed in arguement
            w = {{ wrap }})
   #return(data)
@@ -26,8 +26,8 @@ baseplot <- function(data, shape, value = n, wrap = zone) {
   if(missing(wrap)) {
     data <-
       data %>%
-      group_by(area) %>%
-      summarise(v = sum(v, na.rm = TRUE),
+      dplyr::group_by(area) %>%
+      dplyr::summarise(v = sum(v, na.rm = TRUE),
                 .groups = "drop")
   }
 
@@ -35,36 +35,36 @@ baseplot <- function(data, shape, value = n, wrap = zone) {
   suppressMessages(
     data <-
       shape %>%
-      filter(area %in% data$area) %>%
-      left_join(data)
+      dplyr::filter(area %in% data$area) %>%
+      dplyr::left_join(data)
   )
 
-  bb <- data %>% st_bbox()
+  bb <- data %>% sf::st_bbox()
 
   suppressWarnings(
     shape2 <-
       data %>%
-      st_crop(bb) %>%
-      st_cast("MULTIPOLYGON")
+      sf::st_crop(bb) %>%
+      sf::st_cast("MULTIPOLYGON")
   )
 
 
   p <-
-    ggplot() +
-    theme_bw() +
-    geom_sf(data = shape2,
+    ggplot2::ggplot() +
+    ggplot2::theme_bw() +
+    ggplot2::geom_sf(data = shape2,
             colour = "grey", alpha = 0) +
-    geom_sf(data = data,
-            aes(fill = factor(v))) +
-    geom_sf(data = countries) +
-    scale_fill_viridis_d() +
-    coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4]))
+    ggplot2::geom_sf(data = data,
+                     ggplot2::aes(fill = factor(v))) +
+    ggplot2::geom_sf(data = countries) +
+    ggplot2::scale_fill_viridis_d() +
+    ggplot2::coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4]))
 
   if(!missing(wrap)) {
 
     p <-
       p +
-      facet_wrap(~ w)
+      ggplot2::facet_wrap(~ w)
 
   }
 
