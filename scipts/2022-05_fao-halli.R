@@ -1,7 +1,8 @@
+# remotes::install_github("einarhjorleifsson/gisland", dependencies = FALSE)
 library(tidyverse)
 library(sf)
 library(rnaturalearth)
-# remotes::install_github("einarhjorleifsson/gisland", dependencies = FALSE)
+source("R/baseplot_fao-halli.R")
 
 # get shapes -------------------------------------------------------------------
 coast <-
