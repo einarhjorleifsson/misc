@@ -1,5 +1,16 @@
-# usage, see: script/2022-05_fao-halli.R
+# usage, see: scripts/2022-05_fao-halli.R
 
+#' Merge data with FAO or EEZ shapes and visualize
+#'
+#' @param data A tibble containing variable area, either FAO major zone code or country EEZ iso3a code.
+#' @param shape Shapefile, either EEZ or FAO major zone polygons. The code name for each should be a named "area".
+#' @param value The name of the variable to be plotted.
+#' @param wrap The name of the variable to be wrapped. If missing, data by area will
+#' be summed before plot is generated.
+#'
+#' @return A ggplot
+#' @export
+#'
 baseplot <- function(data, shape, value = n, wrap = zone) {
 
   data <-
