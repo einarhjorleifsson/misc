@@ -12,5 +12,5 @@ Merge data associated with EEZ or FAO major zones with corresponding
 shapefiles and visualizes via a plot function.
 
 ``` r
-source("scipts/2022-05_fao-halli.R")
+source("scripts/2022-05_fao-halli.R")
 ```
